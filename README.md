@@ -14,11 +14,15 @@ Note the code is based on Firefox.
 `pip install -r requirements.txt`
 3. Specify the absolute path to the Webdriver in _canvas2json.py_ in line 18. 
 4. Run the following command line  
-`# Run the code to start scraping`   
-`python3 canvas2json.py [txt file] [output folder] [whether to save png, 1 is yes]`   
+```
+# Run the code to start scraping
+python3 canvas2json.py [txt file] [output folder] [0 or 1, 1 will save png]
+```  
 Sample command line  
-`# Use the txt file provided in the repository to test the script`
-`python3 canvas2json.py urls.txt result 1`  
+```
+# Use the txt file provided in the repository to test the script
+python3 canvas2json.py urls.txt result 1
+```
 This will scrape all the urls in the _urls.txt_ file and saved as json file in _result_ folder. png output will also be saved in _result_ folder.   
 
 
