@@ -1,0 +1,3 @@
+http://curran.github.io/HTML5Examples/canvas/smileyFace.html
+https://bitinfocharts.com/comparison/bitcoin-transactions.html
+https://stats.warbrokers.io/players/i/5d2ead35d142affb05757778
