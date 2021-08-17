@@ -14,6 +14,13 @@ def main():
     parser.add_argument("save_png", default=1, nargs='?', choices=["0", "1"], help="whether to save png")
     args = parser.parse_args()
 
+    # Config driver
+    driver_path = ""
+    assert len(driver_path) > 0, "Please specify the browser driver path"
+    options = Options()
+    options.add_argument('--headless')
+    driver = webdriver.Firefox(executable_path = driver_path, options=options)
+
     # Input
     url_file = args.url
     with open(os.path.join(os.getcwd(), url_file)) as f:
@@ -30,13 +37,6 @@ def main():
         save_png = True
     else:
         save_png = False
-    
-    # Config driver
-    driver_path = "D:\\selenium_driver\\geckodriver"
-    assert len(driver_path) > 0, "Please specify the browser driver path"
-    options = Options()
-    options.add_argument('--headless')
-    driver = webdriver.Firefox(executable_path = driver_path, options=options)
 
     print("In total, there are %s url(s) to scrape" % len(urls))
 
@@ -49,7 +49,6 @@ def main():
         try: 
             driver.get(url)
             # driver.get("http://curran.github.io/HTML5Examples/canvas/smileyFace.html")
-            # driver.get("https://stats.warbrokers.io/players/i/5d2ead35d142affb05757778")
         except Exception:
             print("Cannot reach %s" % url)
             continue
@@ -60,7 +59,7 @@ def main():
 
         for idx, canvas in enumerate(canvases): 
 
-            # get the canvas as a PNG base64 string
+            # get the canvas to json string
             # https://stackoverflow.com/questions/44806870/saving-canvas-to-json-and-loading-json-to-canvas
             canvas_str = driver.execute_script(
                 '''
@@ -70,12 +69,12 @@ def main():
                 ''', 
                 canvas)
 
-            # save to a file
+            # save as json file
             with open(os.path.join(output_dir, "%s_%s.json" % (url_name, idx)), 'w') as f:
                 f.write(canvas_str)
 
+            # save as png file
             if save_png:
-                
                 # Convert dictionary-like string to dictionary
                 di = ast.literal_eval(canvas_str)
                 # Hard code to get the image string, then read it as bytes
@@ -86,7 +85,6 @@ def main():
                     fh.write(base64.decodebytes(s))
 
     driver.quit()
-
 
 
 if __name__ == "__main__":
